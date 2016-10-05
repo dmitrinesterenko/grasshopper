@@ -1,44 +1,67 @@
 <style>
+  body{
+    background-color:#c4c9a6;
+  }
   .main{
-    width:720px;
+    width:1280px;
+    margin:auto;
+  }
+  .content p{
+    font-size:15pt;
+    font-family: Helvetica sans-serif;
+    background-color: #fff;
+    padding: 20px;
+    border-bottom: thin solid black;
+    width:90%;
   }
   .block{
-    width:20px;
-    height:20px;
+    width:120px;
+    height:120px;
     border: thin solid #3e3e3e;
     float: left;
     padding: 5px;
   }
   .red{
     background-color: #fe9e9e;
+    background:url('./grasshopper1.jpg') no-repeat;
+    background-size: 100% 100%;
   }
   .green{
     background-color: #c5fcc5;
+    background:url('./grasshopper2.jpg') no-repeat;
+    background-size: 100% 100%;
   }
-  .white{
-    width: 20px;
-  }
+
   .action{
     color: #3e3e3e;
     text-align: center;
+    background-color: #ffeeee;
+    padding: 20px;
+  }
+  .action#reset{
+    width: 80px;
   }
   .content, .action{
     clear: both;
   }
 </style>
+
 <div class="main">
   <div class="content">
     <p>
-      Grasshopers are allowed to move into an empty spot OR they can jump across a
-      grasshoper of the same color to get to an empty spot.
+      Exchange the sides for the grasshoppers so that grasshopers from the left
+      exchange places with those on the right.
     </p>
     <p>
-      Exchange the sides for the grasshopers so that red grasshopers.
+      Grasshoppers are allowed to move into an empty spot OR they can jump across a
+      grasshopper to get to an empty spot.
     </p>
   </div>
 
   <div id="canvas"></div>
-  <div id="reset" class="action">RESET</div>
+  <div id="reset" class="action">
+    <p>RESET</p>
+  </div>
 </div>
 
 <script>
