@@ -1,0 +1,140 @@
+<style>
+  .main{
+    width:720px;
+  }
+  .block{
+    width:20px;
+    height:20px;
+    border: thin solid #3e3e3e;
+    float: left;
+    padding: 5px;
+  }
+  .red{
+    background-color: #fe9e9e;
+  }
+  .green{
+    background-color: #c5fcc5;
+  }
+  .white{
+    width: 20px;
+  }
+  .action{
+    color: #3e3e3e;
+    text-align: center;
+  }
+  .content, .action{
+    clear: both;
+  }
+</style>
+<div class="main">
+  <div class="content">
+    <p>
+      Grasshopers are allowed to move into an empty spot OR they can jump across a
+      grasshoper of the same color to get to an empty spot.
+    </p>
+    <p>
+      Exchange the sides for the grasshopers so that red grasshopers.
+    </p>
+  </div>
+
+  <div id="canvas"></div>
+  <div id="reset" class="action">RESET</div>
+</div>
+
+<script>
+  var start=[1, 1, 1, 1, 0, -1, -1, -1, -1];
+  var end=[-1,-1,-1,-1,0, 1, 1, 1, 1];
+  var position=start.slice();
+
+  function is_done(current){
+    return current == end;
+  }
+
+  function draw(position){
+    var root = document.getElementById('canvas');
+    root = clear(root);
+    console.log(root);
+    length = position.length;
+    for(var i=0; i<length; i++){
+      el = makeChild(position[i], i);
+      root.appendChild(el);
+    }
+  }
+
+  function clear(el){
+    while(el.firstChild){
+      el.removeChild(el.firstChild);
+    }
+    return el;
+  }
+
+  function makeChild(value, position){
+    var el = document.createElement("div");
+    el.setAttribute("data-value", value);
+    el.setAttribute("id", position);
+    if(value < 0){
+      color = "green";
+    }else if(value > 0){
+      color = "red";
+    }else{
+      color = "white";
+    }
+    el.setAttribute("class", color + " " + "block");
+    //el.innerText = value;
+    el.onclick = onGrasshoperClick;
+    console.log(el);
+    return el;
+  }
+
+  // make a move
+  function onGrasshoperClick(self){
+    console.log(self.target.id, self.target.getAttribute("data-value"));
+    console.log("Hey clicked");
+    tryMove(self.target.id, self.target.getAttribute("data-value"));
+
+  }
+
+  function tryMove(place, grasshoperColor){
+    console.log(position);
+    console.log(place);
+    console.log(grasshoperColor);
+    for(var i=1; i<=2; i++){
+       nextIndex = Number(place) + i*Number(grasshoperColor);
+       nextMove = position[nextIndex]+Number(grasshoperColor);
+       console.log(nextMove);
+       if(nextMove != NaN && goodMove(nextMove)){
+         console.log('ILLEGAL');
+       }else{
+         //swap elements
+         temp = position[nextIndex];
+         position[nextIndex] = position[place];
+         position[place] = temp;
+         draw(position);
+         console.log('good');
+         //break early if success in making a move
+         return;
+       }
+    }
+  }
+
+  function goodMove(value){
+    return (nextMove > 1 || nextMove == 0 || nextMove < -1)
+  }
+
+  function onResetClick(){
+    console.log('Resetting');
+    console.log(position, start);
+    position = start.slice();
+    draw(position);
+  }
+
+  function main(){
+    draw(position);
+    reset = document.getElementById("reset");
+    reset.onclick = onResetClick;
+  }
+
+  main();
+</script>
+
+
